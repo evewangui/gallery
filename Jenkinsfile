@@ -1,58 +1,46 @@
 pipeline {
-    agent any  // Runs on any available Jenkins agent
-
-    environment {
-        // Load variables from Jenkins or .env file if configured
-        NODE_ENV = 'production'
+    agent any
+    
+    tools {
+        nodejs "NodeJS"
     }
-
+    
+    environment {
+        RENDER_DEPLOY_HOOK = credentials('render-deploy-hook')
+    }
+    
     stages {
         stage('Checkout') {
             steps {
-                // Fetch code from your repository
                 checkout scm
             }
         }
-
+        
         stage('Install Dependencies') {
             steps {
-                echo 'Installing dependencies...'
                 sh 'npm install'
             }
         }
-
-        stage('Run Tests') {
+        
+        stage('Test') {
             steps {
-                echo 'Running tests...'
                 sh 'npm test'
             }
+            post {
+                failure {
+                    emailext (
+                        subject: "Build Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+                        body: "Tests failed in build ${env.BUILD_NUMBER}. Check console output at ${env.BUILD_URL}",
+                        to: 'your-email@example.com'
+                    )
+                }
+            }
         }
-
-        stage('Build') {
+        
+        stage('Deploy to Render') {
             steps {
-                echo 'Building application...'
-                sh 'npm run build'
+                sh 'curl ${RENDER_DEPLOY_HOOK}'
             }
-        }
-
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying application...'
-                // Add your deployment commands here
-                // e.g., `scp`, `docker`, or `kubectl`
-            }
-        }
-    }
-
-    post {
-        success {
-            echo ' Build completed successfully!'
-        }
-        failure {
-            echo 'Build failed!'
         }
     }
 }
