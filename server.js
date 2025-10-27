@@ -38,6 +38,7 @@ const connectDB = async () => {
     }
 };
 
+
 // Connect to MongoDB before starting server
 connectDB().then(() => {
     // Start Server
