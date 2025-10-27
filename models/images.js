@@ -6,7 +6,7 @@ var imageSchema = new Schema({
     name: String,
     path: String,
     size: Number,
-    date: {type: Date, default: Date() }
+    date: { type: Date, default: Date() }
 
 });
 
