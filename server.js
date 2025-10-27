@@ -27,8 +27,6 @@ const connectDB = async () => {
         throw new Error('MongoDB connection string is not set. Set MONGODB_URI or MONGO_URI in .env');
     }
 
-
-
     try {
         const conn = await mongoose.connect(mongoUri, {
             dbName
