@@ -1,34 +1,29 @@
-const express = require('express');
-const router = express.Router();
-let Image = require('../models/images');
+import express from 'express';
+import Image from '../models/images.js';
 
-router.get('/:id', (req,res)=>{
-    // console.log(req);
-    Image.findById(req.params.id,function(err, image){
+const router = express.Router();
+
+router.get('/:id', (req, res) => {
+    Image.findById(req.params.id, function (err, image) {
         if (err) console.log(err)
-        // console.log(image);
-        res.render('singleImage', {title: 'Single Image', image:image})
-    } )
+        res.render('singleImage', { title: 'Single Image', image: image })
+    })
 })
 
-router.put('/:id', (req,res) =>{
-    console.log(req.params.id)
-    console.log(req.body);
-    Image.findOneAndUpdate({_id:req.params.id},{
-        name:req.body.name
-    },{new: true}, function(err,image ){
+router.put('/:id', (req, res) => {
+    Image.findOneAndUpdate({ _id: req.params.id }, {
+        name: req.body.name
+    }, { new: true }, function (err, image) {
         if (err) console.log(err)
         res.redirect('/')
     })
 })
 
-router.delete('/:id', (req,res) =>{
-    console.log(req.params.id)
-
-    Image.deleteOne({_id: req.params.id}, function(err){
+router.delete('/:id', (req, res) => {
+    Image.deleteOne({ _id: req.params.id }, function (err) {
         if (err) console.log(err)
         res.redirect('/index')
     })
 })
 
-module.exports = router
+export default router;

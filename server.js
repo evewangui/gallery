@@ -12,9 +12,9 @@ const __dirname = dirname(__filename);
 // Initialize dotenv
 dotenv.config();
 
-// Import routes (need to add .js extension for ES modules)
-import index from './routes/index.js';
-import image from './routes/image.js';
+// Import routes
+import indexRouter from './routes/index.js';
+import imageRouter from './routes/image.js';
 
 // Import config
 import config from './_config.js';
@@ -46,8 +46,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
-app.use('/', index);
-app.use('/image', image);
+app.use('/', indexRouter);
+app.use('/image', imageRouter);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
