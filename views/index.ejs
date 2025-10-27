@@ -29,38 +29,38 @@
   <div class="container center-align" style="margin-top: 2rem;">
     <!--  MILESTONE 2 Banner -->
     <div class="card-panel teal lighten-2 white-text z-depth-2">
-      <h4><i class="material-icons left">flag</i> MILESTONE 2</h4>
+      <h4><i class="material-icons left">flag</i> MILESTONE 3</h4>
       <p>Continuous Integration and Deployment successfully configured 🎉</p>
     </div>
 
     <h1>Image Upload</h1>
-    <%= typeof msg !='undefined' ? msg : '' %>
 
-      <form action="/upload" method="POST" enctype="multipart/form-data">
-        <div class="file-field input-field">
-          <div class="btn grey">
-            <span>Image</span>
-            <input name="image" type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text">
-          </div>
-        </div>
-        <button type="submit" class="btn">Submit</button>
-      </form>
-
-      <hr>
-      <br>
-
-      <div class="row">
-        <% images.forEach(function(image){ %>
-          <div class="column">
-            <a href="/image/<%= image._id %>">
-              <img src="<%= image.path %>" class="responsive-img" alt="<%= image.name %>">
-            </a>
-          </div>
-          <% }); %>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="image">Select Image:</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
       </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <% if (locals.msg) { %>
+    <div class="alert alert-info">
+      <%= msg %>
+    </div>
+    <% } %>
+
+    <hr>
+    <br>
+
+    <div class="row">
+      <% images.forEach(function(image){ %>
+      <div class="column">
+        <a href="/image/<%= image._id %>">
+          <img src="<%= image.path %>" class="responsive-img" alt="<%= image.name %>">
+        </a>
+      </div>
+      <% }); %>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>

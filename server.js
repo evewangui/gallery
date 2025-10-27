@@ -15,6 +15,7 @@ const app = express();
 // Import routes
 import indexRouter from './routes/index.js';
 import imageRouter from './routes/image.js';
+import uploadRouter from './routes/upload.js';
 
 // MongoDB Connection
 mongoose.set('strictQuery', false);
@@ -63,3 +64,4 @@ app.use(express.urlencoded({ extended: false }));
 // Routes
 app.use('/', indexRouter);
 app.use('/image', imageRouter);
+app.use('/', uploadRouter);
