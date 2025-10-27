@@ -1,15 +1,23 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import express from 'express';
+import mongoose from 'mongoose';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Get current directory name (ES module equivalent of __dirname)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Initialize dotenv
 dotenv.config();
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
 
-// Optional: custom config file if you use one
-const config = require('./_config');
+// Import routes (need to add .js extension for ES modules)
+import index from './routes/index.js';
+import image from './routes/image.js';
 
-// Define routes
-const index = require('./routes/index');
-const image = require('./routes/image');
+// Import config
+import config from './_config.js';
 
 // Initialize Express
 const app = express();
